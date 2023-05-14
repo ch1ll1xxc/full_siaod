@@ -2,15 +2,16 @@
 #include <fstream>
 #include <string>
 
-
+// Структура студента
 struct Student
 {
-	unsigned zachotka;
-	std::string full_name;
-	char group[10];
-	unsigned marks[5];
+	unsigned zachotka; // номер зачётки
+	std::string full_name; // имя
+	char group[10]; // группа из 10-ти символов (IKBO-02-22)
+	unsigned marks[5]; // массив из 5-ти оценок
 };
 
+// нахождение средней оценки
 float averageMarkOfStudent(Student& student)
 {
 	float res = 0;
@@ -23,6 +24,8 @@ float averageMarkOfStudent(Student& student)
 	return res;
 }
 
+// определение хорошего студента
+// по среднему баллу
 bool isGoodStudent(Student& student)
 {
 	if (averageMarkOfStudent(student) > 4.f)
@@ -35,6 +38,7 @@ bool isGoodStudent(Student& student)
 	}
 }
 
+// "создание" студента вводом
 void inputStudent(Student& student)
 {
 	std::cout << "Enter student's number: ";
@@ -53,6 +57,7 @@ void inputStudent(Student& student)
 	}
 }
 
+// "создание" студента из .txt
 void inputStudentTXT(Student& student, std::ifstream& in)
 {
 	in >> student.zachotka;
@@ -67,6 +72,7 @@ void inputStudentTXT(Student& student, std::ifstream& in)
 	}
 }
 
+// вывод записи о студенте
 void outputStudent(Student& student)
 {
 	std::cout << student.zachotka << ' ';
@@ -83,6 +89,7 @@ void outputStudent(Student& student)
 	std::cout << averageMarkOfStudent(student) << std::endl;
 }
 
+// структура таблицы
 struct Table
 {
 	Student students[100];
@@ -90,6 +97,8 @@ struct Table
 	const size_t N = 100;
 };
 
+// добавление записей о студентах
+// через .txt
 void addStudentsToTableTXT(Table& table, std::ifstream& in)
 {
 	int ch = 0;
@@ -103,6 +112,7 @@ void addStudentsToTableTXT(Table& table, std::ifstream& in)
 	std::cout << "Introduced: " << ch << " note(-s)." << std::endl;
 }
 
+// добавление !одной! записи о студенте вводом
 void addOneStudentToTable(Table& table)
 {
 	if (table.n < table.N)
@@ -117,6 +127,7 @@ void addOneStudentToTable(Table& table)
 	}
 }
 
+// добавление записей о студентах вводом
 void addStudentsToTable(Table& table)
 {
 	int avaibleToAdd = table.N - table.n;
@@ -131,6 +142,8 @@ void addStudentsToTable(Table& table)
 	}
 }
 
+// удаление записи о студенте
+// по среднему баллу
 void removeStudentFromTable(Table& table, float average)
 {
 	for (unsigned i = 0; i < table.n; i++)
@@ -147,6 +160,7 @@ void removeStudentFromTable(Table& table, float average)
 	}
 }
 
+// добавление одной записи по индексу
 void insert(Table& table, Student& student, unsigned index)
 {
 	if (table.N <= table.n)
@@ -162,6 +176,7 @@ void insert(Table& table, Student& student, unsigned index)
 	table.n++;
 }
 
+// создание таблицы из хороших (по среднему баллу) студентов
 Table makeGoodTable(Table& table)
 {
 	Table goodTable;
@@ -190,6 +205,7 @@ Table makeGoodTable(Table& table)
 	return goodTable;
 }
 
+// вывод таблицы
 void outputTable(Table table)
 {
 	for (unsigned i = 0; i < table.n; i++)
@@ -198,11 +214,13 @@ void outputTable(Table table)
 	}
 }
 
+// вывод зачётки студента
 void outputStudentZach(Student& student)
 {
 	std::cout << student.zachotka << ' ';
 }
 
+// вывод зачёток студентов
 void outputTableZach(Table table)
 {
 	for (unsigned i = 0; i < table.n; i++)
@@ -212,6 +230,7 @@ void outputTableZach(Table table)
 	}
 }
 
+// вспомогательная функция
 void Act(Table& studentTable)
 {
 	while (true)
@@ -264,6 +283,7 @@ void Act(Table& studentTable)
 	}
 }
 
+// основная фукнция
 int main()
 {
 	Table studentTable;
